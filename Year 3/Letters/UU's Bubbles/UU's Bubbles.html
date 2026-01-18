@@ -67,6 +67,25 @@
             text-align: center;
         }
 
+        /* 计时器显示 */
+        #timerDisplay {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-family: "Comic Sans MS", monospace;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4A90E2;
+            text-shadow: 2px 2px 0px white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 25;
+            display: none; /* 开始后显示 */
+        }
+
         @keyframes spin-slow {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -127,6 +146,142 @@
             height: 20px;
             background-color: #cbd5e1;
             margin: 0 5px;
+        }
+        #escapeRateDisplay {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #FF6B6B;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-family: "Comic Sans MS", sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 25;
+            display: none;
+            border: 3px solid rgba(255, 107, 107, 0.5);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        #escapeRateDisplay.danger {
+            background: rgba(255, 50, 50, 0.95);
+            color: white;
+            border-color: #FF3333;
+            animation: pulse 0.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        #settingsBtn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 4px solid #FFD700;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 30;
+            transition: transform 0.2s;
+        }
+        #settingsBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #restartGameBtn {
+            position: absolute;
+            top: 90px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 4px solid #FFD700;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 30;
+            transition: transform 0.2s;
+            display: none;
+        }
+        #restartGameBtn:hover {
+            transform: scale(1.1);
+        }
+        #restartGameBtn:active {
+            transform: scale(0.95);
+        }
+
+        #settingsModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        #settingsContent {
+            background: white;
+            border: 8px solid #FFD700;
+            border-radius: 40px;
+            padding: 40px 60px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .settings-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #FF6B6B;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .settings-label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #4A90E2;
+            min-width: 100px;
+        }
+        .settings-control {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #settingsCloseBtn {
+            background: #FF6B6B;
+            border: 4px solid white;
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        #settingsCloseBtn:hover {
+            transform: scale(1.05);
+            background: #FF5252;
         }
         #musicBtn {
             background: none;
@@ -204,48 +359,154 @@
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1) translateY(-50px); opacity: 0; }
         }
+
+        /* 胜利面板样式 */
+        #victoryModal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s;
+        }
+        #victoryContent {
+            background: white;
+            border: 8px solid #FFD700;
+            border-radius: 40px;
+            padding: 40px 60px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 90%;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
     <canvas id="gameCanvas"></canvas>
 
-    <div id="score-board">
+    <div id="score-board" style="left: 50%; transform: translateX(-50%);">
         <div class="score-icon">⭐</div>
         <div id="scoreDisplay">0</div>
     </div>
 
-    <div id="controls">
-        <div class="control-group">
-            <label for="nameInput" title="宝宝的名字" style="font-size: 0.9em;">我是</label>
-            <input type="text" id="nameInput" value="悠悠" maxlength="6" placeholder="名字">
-        </div>
+    <!-- 逃逸率显示 -->
+    <div id="escapeRateDisplay">逃逸率: 0%</div>
 
-        <div class="divider"></div>
+    <!-- 设置按钮 -->
+    <button id="settingsBtn" title="打开设置">⚙️</button>
 
-        <div class="control-group">
-            <label for="countSlider" title="每次吹泡泡的数量">数量</label>
-            <input type="range" id="countSlider" min="1" max="15" step="1" value="5">
-            <span id="countVal" class="text-xs text-gray-500 w-4">5</span>
-        </div>
-        
-        <div class="divider"></div>
+    <!-- 重新开始按钮 -->
+    <button id="restartGameBtn" title="重新开始游戏">🔄</button>
 
-        <div class="control-group">
-            <label for="speedSlider">速度</label>
-            <input type="range" id="speedSlider" min="0.1" max="2.0" step="0.1" value="0.5">
-        </div>
-
-        <div class="divider"></div>
-
-        <button id="musicBtn" title="背景音乐开关">🎵</button>
-    </div>
+    <!-- 计时器显示 -->
+    <div id="timerDisplay" style="display: none;">15:00</div>
 
     <div id="ui-layer">
         <button id="startBtn" class="start-btn" disabled>加载中...</button>
         <div id="loadingText">准备字母声音... 0/26</div>
         <div id="instruction" class="hidden">
             按 [空格键] 吹泡泡  |  按 [字母键] 戳破泡泡
+        </div>
+    </div>
+
+    <!-- 胜利结算画面 -->
+    <div id="victoryModal">
+        <div id="victoryContent">
+            <div style="font-size: 6rem; margin-bottom: 20px;">🏆</div>
+            <h2 style="font-size: 3rem; font-weight: 900; color: #FF6B6B; margin-bottom: 10px;">太棒了！休息一会吧</h2>
+            <p style="font-size: 1.5rem; color: #4A90E2; font-weight: bold; margin-bottom: 30px;">
+                {name} 一共收集了 <span id="finalScore" style="font-size: 3rem; color: #FFD700; margin: 0 10px;">0</span> 个泡泡！
+            </p>
+            <button id="restartBtn" class="start-btn" style="font-size: 1.5rem; padding: 15px 40px;">再玩一次</button>
+        </div>
+    </div>
+
+    <!-- 失败结算画面 -->
+    <div id="failModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 100; justify-content: center; align-items: center; animation: fadeIn 0.5s;">
+        <div id="failContent" style="background: white; border: 8px solid #FF4444; border-radius: 40px; padding: 40px 60px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: 90%;">
+            <div style="font-size: 6rem; margin-bottom: 20px;">😢</div>
+            <h2 style="font-size: 3rem; font-weight: 900; color: #FF4444; margin-bottom: 10px;">游戏失败了</h2>
+            <p style="font-size: 1.5rem; color: #4A90E2; font-weight: bold; margin-bottom: 30px;">
+                {name} 的泡泡逃逸率达到了 <span id="finalEscapeRate" style="font-size: 3rem; color: #FF4444; margin: 0 10px;">0%</span>
+            </p>
+            <p style="font-size: 1.2rem; color: #888; margin-bottom: 30px;">
+                下次要快点把泡泡收集起来哦！
+            </p>
+            <button id="retryBtn" class="start-btn" style="font-size: 1.5rem; padding: 15px 40px;">再试一次</button>
+        </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div id="settingsModal">
+        <div id="settingsContent">
+            <h2 class="settings-title">⚙️ 游戏设置</h2>
+
+            <div class="settings-group">
+                <span class="settings-label">宝宝的名字</span>
+                <div class="settings-control">
+                    <input type="text" id="nameInput" value="悠悠" maxlength="6" placeholder="名字" style="width: 100%; padding: 8px 12px; border: 2px solid #FF6B6B; border-radius: 12px; font-size: 1rem; font-weight: bold; color: #FF6B6B; font-family: 'Comic Sans MS', sans-serif; outline: none;">
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <span class="settings-label">游戏时长</span>
+                <div class="settings-control">
+                    <input type="range" id="timeSlider" min="1" max="15" step="1" value="15" style="flex: 1;">
+                    <span id="timeVal" style="font-weight: bold; color: #4A90E2; min-width: 50px; text-align: center;">15 分钟</span>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <span class="settings-label">泡泡数量</span>
+                <div class="settings-control">
+                    <input type="range" id="countSlider" min="1" max="15" step="1" value="5" style="flex: 1;">
+                    <span id="countVal" style="font-weight: bold; color: #4A90E2; min-width: 50px; text-align: center;">5 个</span>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <span class="settings-label">泡泡速度</span>
+                <div class="settings-control">
+                    <input type="range" id="speedSlider" min="0.1" max="2.0" step="0.1" value="0.5" style="flex: 1;">
+                    <span id="speedVal" style="font-weight: bold; color: #4A90E2; min-width: 50px; text-align: center;">0.5x</span>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <span class="settings-label">泡泡上限</span>
+                <div class="settings-control">
+                    <input type="range" id="limitSlider" min="20" max="200" step="10" value="100" style="flex: 1;">
+                    <span id="limitVal" style="font-weight: bold; color: #4A90E2; min-width: 50px; text-align: center;">100</span>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <span class="settings-label">失败逃逸率</span>
+                <div class="settings-control">
+                    <input type="range" id="escapeRateSlider" min="0" max="101" step="1" value="50" style="flex: 1;">
+                    <span id="escapeRateVal" style="font-weight: bold; color: #4A90E2; min-width: 50px; text-align: center;">50%</span>
+                </div>
+            </div>
+
+            <div class="settings-group" style="justify-content: center;">
+                <div class="settings-control" style="justify-content: center;">
+                    <button id="musicBtn" title="背景音乐开关" style="background: none; border: 2px solid #FFD700; border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer;">🎵</button>
+                </div>
+            </div>
+
+            <button id="settingsCloseBtn">保存并关闭</button>
         </div>
     </div>
 
@@ -259,11 +520,33 @@
         const speedSlider = document.getElementById('speedSlider');
         const countSlider = document.getElementById('countSlider');
         const countVal = document.getElementById('countVal');
+        const timeSlider = document.getElementById('timeSlider');
+        const timeVal = document.getElementById('timeVal');
+        const limitSlider = document.getElementById('limitSlider');
+        const limitVal = document.getElementById('limitVal');
+        const escapeRateSlider = document.getElementById('escapeRateSlider');
+        const escapeRateVal = document.getElementById('escapeRateVal');
         const musicBtn = document.getElementById('musicBtn');
         const nameInput = document.getElementById('nameInput');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+        const speedVal = document.getElementById('speedVal');
         
         const scoreDisplay = document.getElementById('scoreDisplay');
         const scoreBoard = document.getElementById('score-board');
+        const timerDisplay = document.getElementById('timerDisplay');
+        
+        const victoryModal = document.getElementById('victoryModal');
+        const victoryContent = document.getElementById('victoryContent');
+        const finalScoreSpan = document.getElementById('finalScore');
+        const restartBtn = document.getElementById('restartBtn');
+        const failModal = document.getElementById('failModal');
+        const failContent = document.getElementById('failContent');
+        const finalEscapeRateSpan = document.getElementById('finalEscapeRate');
+        const retryBtn = document.getElementById('retryBtn');
+        const escapeRateDisplay = document.getElementById('escapeRateDisplay');
+        const restartGameBtn = document.getElementById('restartGameBtn');
 
         let width, height;
         let bubbles = [];
@@ -274,10 +557,24 @@
         
         let globalSpeedMultiplier = parseFloat(speedSlider.value);
         let spawnQuantity = parseInt(countSlider.value);
+        let gameDurationMins = parseInt(timeSlider.value);
+        let bubbleLimit = parseInt(limitSlider.value);
+        let maxEscapeRate = 50;
         let isSpawning = false;
         let childName = nameInput.value || "悠悠";
+
+        // 逃逸率统计
+        let totalBubblesSpawned = 0;
+        let escapedBubblesCount = 0;
+        let hasStartedTracking = false; // 是否开始统计逃逸率
+        let trackingStartedTime = 0; // 开始追踪的时间戳
         
-        let blowAnimationEnd = 0; 
+        let blowAnimationEnd = 0;
+        let failBlowAnimationEnd = 0; 
+        
+        // 计时器相关变量
+        let timerEndTime = 0;
+        let isTimerRunning = false;
         
         let currentPraiseInterval = 5; 
         const maxPraiseInterval = 20; 
@@ -288,11 +585,43 @@
         
         speedSlider.addEventListener('input', (e) => {
             globalSpeedMultiplier = parseFloat(e.target.value);
+            speedVal.innerText = globalSpeedMultiplier.toFixed(1) + 'x';
         });
-        
+
         countSlider.addEventListener('input', (e) => {
             spawnQuantity = parseInt(e.target.value);
-            countVal.innerText = spawnQuantity;
+            countVal.innerText = spawnQuantity + ' 个';
+        });
+
+        timeSlider.addEventListener('input', (e) => {
+            gameDurationMins = parseInt(e.target.value);
+            timeVal.innerText = gameDurationMins + ' 分钟';
+            if (!isTimerRunning && !isGameActive) {
+                // 如果游戏还没开始，更新显示预览
+                timerDisplay.innerText = `${gameDurationMins.toString().padStart(2, '0')}:00`;
+            }
+        });
+
+        limitSlider.addEventListener('input', (e) => {
+            bubbleLimit = parseInt(e.target.value);
+            limitVal.innerText = bubbleLimit;
+        });
+
+        escapeRateSlider.addEventListener('input', (e) => {
+            maxEscapeRate = parseInt(e.target.value);
+            escapeRateVal.innerText = maxEscapeRate + '%';
+        });
+
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+
+        settingsCloseBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+
+        nameInput.addEventListener('keydown', (e) => {
+            e.stopPropagation();
         });
 
         nameInput.addEventListener('input', (e) => {
@@ -308,76 +637,46 @@
         let musicTimerID = null;
         let noteIndex = 0;
 
-        // --- 字母音频系统 (本地优先 -> Web Audio -> HTML5 Audio Hybrid) ---
+        // --- 字母音频系统 ---
         const letterAudioMap = {};
         let loadedCount = 0;
 
-        // 在线音频源
         function getOnlineSoundUrl(letter) {
             const l = letter.toUpperCase();
             return `https://dict.youdao.com/dictvoice?audio=${l}&type=2`;
         }
 
-        // 本地音频接口定义
         function getLocalSoundUrl(letter) {
             return `./sound/${letter.toLowerCase()}.mp3`;
         }
 
-        // 预加载逻辑：优先加载本地 sound/x.mp3，如果失败则加载在线音频
         function preloadSounds() {
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-            
             letters.forEach(letter => {
                 const localUrl = getLocalSoundUrl(letter);
                 const onlineUrl = getOnlineSoundUrl(letter);
 
-                // 1. 尝试 Fetch 本地文件
                 fetch(localUrl)
-                    .then(response => {
-                        if (!response.ok) throw new Error("Local file not found");
-                        return response.arrayBuffer();
+                    .then(res => {
+                        if (!res.ok) throw new Error("Local missing");
+                        return res.arrayBuffer();
                     })
-                    .then(arrayBuffer => {
-                        // 本地文件存在，解码使用
-                        if (audioCtx) {
-                            return audioCtx.decodeAudioData(arrayBuffer);
-                        }
+                    .then(buf => {
+                        if(audioCtx) return audioCtx.decodeAudioData(buf);
                     })
-                    .then(audioBuffer => {
-                        if (audioBuffer) {
-                            // 使用 WebAudio 格式存储，实现0延迟
-                            // 为了兼容统一接口，我们把 buffer 存起来，
-                            // 并在 letterAudioMap 中标记它是一个 Buffer
-                            letterAudioMap[letter] = { type: 'buffer', data: audioBuffer };
-                            console.log(`已加载本地语音: ${letter}`);
+                    .then(audioBuf => {
+                        if(audioBuf) {
+                            letterAudioMap[letter] = { type: 'buffer', data: audioBuf };
                             incrementLoad();
                         }
                     })
-                    .catch(err => {
-                        // 2. 本地失败，回退到 HTML5 Audio 加载在线资源
-                        // 这里使用 HTML5 Audio 对象是为了更好的兼容性和流式缓冲
+                    .catch(() => {
                         const audio = new Audio();
                         audio.src = onlineUrl;
-                        audio.preload = "auto"; 
-                        
+                        audio.preload = "auto";
                         letterAudioMap[letter] = { type: 'audio', data: audio };
-
-                        audio.oncanplaythrough = () => {
-                            if(!audio.loadedFlag) {
-                                audio.loadedFlag = true;
-                                incrementLoad();
-                            }
-                        };
-                        
-                        audio.onerror = () => {
-                            console.warn("Error loading online audio:", letter);
-                            // 即使失败也计数，防止卡死加载界面
-                            if(!audio.loadedFlag) {
-                                audio.loadedFlag = true;
-                                incrementLoad();
-                            }
-                        };
-                        
+                        audio.oncanplaythrough = () => { if(!audio.loadedFlag) { audio.loadedFlag=true; incrementLoad(); } };
+                        audio.onerror = () => { if(!audio.loadedFlag) { audio.loadedFlag=true; incrementLoad(); } };
                         audio.load();
                     });
             });
@@ -397,10 +696,8 @@
             loadingText.style.display = 'none';
         }
 
-        // 立即开始加载
         preloadSounds();
 
-        // --- 核心：音频预热 (Warm-up) ---
         function warmUpAudio() {
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
             letters.forEach(letter => {
@@ -408,14 +705,8 @@
                 if (item && item.type === 'audio') {
                     const audio = item.data;
                     audio.muted = true;
-                    const playPromise = audio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            audio.pause();
-                            audio.currentTime = 0;
-                            audio.muted = false; 
-                        }).catch(e => {});
-                    }
+                    const p = audio.play();
+                    if (p !== undefined) p.then(() => { audio.pause(); audio.currentTime=0; audio.muted=false; }).catch(()=>{});
                 }
             });
         }
@@ -431,14 +722,12 @@
 
         function ensureAudioContext() {
             if (!audioCtx) {
-                try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                } catch(e) {}
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
             }
             if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
 
-        // --- 背景音乐 ---
+        // --- 音乐与音效 ---
         const NOTES = {
             'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
             'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25,
@@ -488,6 +777,76 @@
                 musicBtn.innerText = "🔇";
                 musicBtn.style.opacity = "0.5";
             }
+        }
+
+        // 胜利音效：隆重的和弦
+        function playVictorySound() {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            // C Major Chord Arpeggio + Final Chord
+            const sequence = [
+                {f: 523.25, t: 0},   // C5
+                {f: 659.25, t: 0.1}, // E5
+                {f: 783.99, t: 0.2}, // G5
+                {f: 1046.50, t: 0.3},// C6
+                // Final Chord
+                {f: 523.25, t: 0.6, d: 1.5},
+                {f: 659.25, t: 0.6, d: 1.5},
+                {f: 783.99, t: 0.6, d: 1.5},
+                {f: 1046.50, t: 0.6, d: 1.5}
+            ];
+
+            sequence.forEach(note => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = note.d ? 'triangle' : 'sine'; // 结尾用三角波更响亮
+                osc.frequency.value = note.f;
+
+                const start = now + note.t;
+                const dur = note.d || 0.2;
+
+                gain.gain.setValueAtTime(0, start);
+                gain.gain.linearRampToValueAtTime(0.3, start + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(start);
+                osc.stop(start + dur + 0.1);
+            });
+        }
+
+        // 失败音效：低沉的和弦
+        function playFailSound() {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            // 下降的和弦
+            const sequence = [
+                {f: 392.00, t: 0, d: 0.8},   // G4
+                {f: 349.23, t: 0.1, d: 0.8}, // F4
+                {f: 329.63, t: 0.2, d: 0.8}, // E4
+                {f: 293.66, t: 0.3, d: 0.8}, // D4
+                {f: 261.63, t: 0.4, d: 1.0}  // C4
+            ];
+
+            sequence.forEach(note => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = note.f;
+
+                const start = now + note.t;
+                const dur = note.d;
+
+                gain.gain.setValueAtTime(0, start);
+                gain.gain.linearRampToValueAtTime(0.2, start + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(start);
+                osc.stop(start + dur + 0.1);
+            });
         }
 
         musicBtn.addEventListener('click', () => {
@@ -540,38 +899,45 @@
             osc.stop(audioCtx.currentTime + 0.3);
         }
 
+        // 吹不出泡泡的失败音效
+        function playFailBlowSound() {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, now);
+            osc.frequency.exponentialRampToValueAtTime(50, now + 0.2);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.2);
+        }
+
         function speakLetter(letter) {
             const item = letterAudioMap[letter];
-            
             if (item) {
                 if (item.type === 'buffer' && audioCtx) {
-                    // 本地高质量音频 (Web Audio)
-                    if (lastPlayedLetterSource) {
-                        try { lastPlayedLetterSource.stop(); } catch(e) {}
-                    }
+                    if (lastPlayedLetterSource) { try { lastPlayedLetterSource.stop(); } catch(e) {} }
                     const source = audioCtx.createBufferSource();
                     source.buffer = item.data;
                     source.connect(audioCtx.destination);
                     lastPlayedLetterSource = source;
                     source.start(0);
                 } else if (item.type === 'audio') {
-                    // 在线音频 (HTML5 Audio)
                     const audio = item.data;
                     audio.currentTime = 0;
                     audio.play().catch(e => {});
                 }
             } else {
-                // Fallback: TTS
                 if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel(); 
                     const utterance = new SpeechSynthesisUtterance(letter);
                     utterance.lang = 'en-US'; 
-                    // 寻找女声
                     const voices = window.speechSynthesis.getVoices();
-                    const femaleVoice = voices.find(v => 
-                        v.lang.startsWith('en') && 
-                        (v.name.includes('Google US English') || v.name.includes('Zira') || v.name.includes('Samantha') || v.name.toLowerCase().includes('female'))
-                    );
+                    const femaleVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google US English') || v.name.includes('Zira') || v.name.includes('Samantha') || v.name.toLowerCase().includes('female')));
                     if (femaleVoice) utterance.voice = femaleVoice;
                     window.speechSynthesis.speak(utterance);
                 }
@@ -579,10 +945,10 @@
         }
 
         // --- 智能夸赞系统 ---
-        
         let hasNaturalVoice = false;
         let bestLocalVoice = null;
         
+        // IndexedDB
         const DB_NAME = 'BubbleGameAudioCache';
         const DB_VERSION = 1;
         const STORE_NAME = 'praises';
@@ -590,16 +956,11 @@
 
         function initDB() {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
-            request.onerror = (event) => console.error("Database error: " + event.target.errorCode);
             request.onupgradeneeded = (event) => {
                 const db = event.target.result;
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    db.createObjectStore(STORE_NAME);
-                }
+                if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
             };
-            request.onsuccess = (event) => {
-                db = event.target.result;
-            };
+            request.onsuccess = (event) => { db = event.target.result; };
         }
         
         function getCachedAudio(text, callback) {
@@ -608,8 +969,7 @@
             const objectStore = transaction.objectStore(STORE_NAME);
             const request = objectStore.get(text);
             request.onsuccess = (event) => {
-                if (request.result) callback(request.result);
-                else callback(null);
+                if (request.result) callback(request.result); else callback(null);
             };
             request.onerror = () => callback(null);
         }
@@ -649,10 +1009,7 @@
                     }
                 }
             });
-            
-            if (bestLocalVoice) {
-                hasNaturalVoice = (bestScore >= 80);
-            }
+            if (bestLocalVoice) hasNaturalVoice = (bestScore >= 80);
         }
 
         function playMagicSound() {
@@ -662,16 +1019,13 @@
             notes.forEach((freq, i) => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = freq;
+                osc.type = 'sine'; osc.frequency.value = freq;
                 const startTime = now + i * 0.05;
                 gain.gain.setValueAtTime(0, startTime);
                 gain.gain.linearRampToValueAtTime(0.3, startTime + 0.05);
                 gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.5);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(startTime);
-                osc.stop(startTime + 0.5);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(startTime); osc.stop(startTime + 0.5);
             });
         }
 
@@ -684,31 +1038,28 @@
             "{name}做得好，你已经收集了{n}个泡泡！"
         ];
 
+        const tooManyBubblesTemplates = [
+            "{name}，泡泡太多了，先把屏幕上的泡泡收集完吧！",
+            "哇，泡泡都要跑光啦！{name}快把它们收集起来！",
+            "{name}，先把现有的泡泡戳破，然后再吹新的吧！",
+            "泡泡太多啦，{name}先把它们收集完吧！"
+        ];
+
         function speakPraise(count) {
             playMagicSound();
             const templateIndex = Math.floor(Math.random() * praiseTemplates.length);
             const template = praiseTemplates[templateIndex];
             const text = template.replace("{n}", count).replace("{name}", childName);
 
-            // 1. 【新增】优先尝试加载本地自定义鼓励语音
-            // 文件名约定：praise_0.mp3 对应第一句, praise_1.mp3 对应第二句...
             const localPraiseUrl = `./sound/praise_${templateIndex}.mp3`;
-            
             fetch(localPraiseUrl)
-                .then(res => {
-                    if (!res.ok) throw new Error("Local praise missing");
-                    return res.blob();
-                })
+                .then(res => { if (!res.ok) throw new Error("Local praise missing"); return res.blob(); })
                 .then(blob => {
-                    console.log("Playing LOCAL praise file:", localPraiseUrl);
                     const url = URL.createObjectURL(blob);
                     const audio = new Audio(url);
                     audio.play();
                 })
-                .catch(() => {
-                    // 2. 如果本地没有，回退到原有逻辑 (DB缓存 -> 在线TTS -> 本地TTS)
-                    playFallbackPraise(text);
-                });
+                .catch(() => { playFallbackPraise(text); });
         }
 
         function playFallbackPraise(text) {
@@ -719,12 +1070,7 @@
                     audio.play().catch(e => console.error("Cache play failed", e));
                     return;
                 }
-
-                if (hasNaturalVoice && bestLocalVoice) {
-                    speakNativeTTS(text);
-                    return;
-                }
-
+                if (hasNaturalVoice && bestLocalVoice) { speakNativeTTS(text); return; }
                 const encodedText = encodeURIComponent(text);
                 const audioSources = [
                     `https://fanyi.sogou.com/reventondc/synthesis?text=${encodedText}&speed=1&lang=zh-CHS&from=translateweb&speaker=6`,
@@ -735,64 +1081,37 @@
         }
 
         function tryFetchAndCache(sources, index, text) {
-            if (index >= sources.length) {
-                speakNativeTTS(text);
-                return;
-            }
-
+            if (index >= sources.length) { speakNativeTTS(text); return; }
             const url = sources[index];
-            
             fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error("Network error");
-                    return response.blob();
-                })
+                .then(response => { if (!response.ok) throw new Error("Network error"); return response.blob(); })
                 .then(blob => {
                     const audioUrl = URL.createObjectURL(blob);
                     const audio = new Audio(audioUrl);
                     audio.play().catch(e => console.error("Play failed", e));
                     cacheAudio(text, blob);
                 })
-                .catch(err => {
-                    tryDirectPlay(url, sources, index, text);
-                });
+                .catch(err => { tryDirectPlay(url, sources, index, text); });
         }
 
         function tryDirectPlay(url, sources, index, text) {
             const audio = new Audio(url);
-            
-            const timeoutId = setTimeout(() => {
-                audio.src = "";
-                tryFetchAndCache(sources, index + 1, text); 
-            }, 1000);
-
-            audio.oncanplaythrough = () => {
-                clearTimeout(timeoutId);
-                audio.play().catch(() => {});
-            };
-
-            audio.onerror = () => {
-                clearTimeout(timeoutId);
-                tryFetchAndCache(sources, index + 1, text);
-            };
+            const timeoutId = setTimeout(() => { audio.src = ""; tryFetchAndCache(sources, index + 1, text); }, 1000);
+            audio.oncanplaythrough = () => { clearTimeout(timeoutId); audio.play().catch(() => {}); };
+            audio.onerror = () => { clearTimeout(timeoutId); tryFetchAndCache(sources, index + 1, text); };
         }
 
         function speakNativeTTS(text) {
             if (!('speechSynthesis' in window)) return;
             window.speechSynthesis.cancel(); 
-
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'zh-CN'; 
             currentPraiseUtterance = utterance; 
             utterance.onend = function() { currentPraiseUtterance = null; };
-            
             if (bestLocalVoice) {
                 utterance.voice = bestLocalVoice;
-                if (hasNaturalVoice) {
-                    utterance.rate = 1.0; utterance.pitch = 1.0;
-                } else {
-                    utterance.rate = 0.95; utterance.pitch = 1.1; 
-                }
+                if (hasNaturalVoice) { utterance.rate = 1.0; utterance.pitch = 1.0; } 
+                else { utterance.rate = 0.95; utterance.pitch = 1.1; }
             }
             window.speechSynthesis.speak(utterance);
         }
@@ -801,28 +1120,38 @@
 
         class Bubble {
             constructor(letter, startX, startY) {
-                this.r = 30 + Math.random() * 40; 
+                this.r = 30 + Math.random() * 40;
                 this.x = startX !== undefined ? startX : Math.random() * width;
                 this.y = startY !== undefined ? startY : height + this.r;
-                this.baseSpeed = 1 + Math.random() * 2; 
-                if (startX !== undefined) this.vx = (Math.random() - 0.5) * 8; 
+                this.baseSpeed = 1 + Math.random() * 2;
+                if (startX !== undefined) this.vx = (Math.random() - 0.5) * 8;
                 else this.vx = 0;
                 this.sway = Math.random() * 0.05;
                 this.swayOffset = Math.random() * Math.PI * 2;
                 this.colorHue = Math.random() * 360;
-                this.letter = letter || String.fromCharCode(65 + Math.floor(Math.random() * 26)); 
+                this.letter = letter || String.fromCharCode(65 + Math.floor(Math.random() * 26));
                 this.popped = false;
+                this.createdAt = Date.now(); // 记录创建时间
             }
 
             update() {
                 this.y -= this.baseSpeed * globalSpeedMultiplier;
                 if (this.vx !== 0) { this.x += this.vx; this.vx *= 0.98; }
                 this.x += Math.sin(this.y * this.sway + this.swayOffset) * 1.5;
-                
-                if (this.x - this.r < 0) { this.x = this.r; this.vx = Math.abs(this.vx) * 0.5 + 0.5; } 
+
+                if (this.x - this.r < 0) { this.x = this.r; this.vx = Math.abs(this.vx) * 0.5 + 0.5; }
                 else if (this.x + this.r > width) { this.x = width - this.r; this.vx = -Math.abs(this.vx) * 0.5 - 0.5; }
 
-                if (this.y < -this.r * 2) { this.popped = true; return false; }
+                // 泡泡逃逸
+                if (this.y < -this.r * 2) {
+                    this.popped = true;
+                    // 只有在开始追踪后创建的泡泡才计入逃逸率
+                    if (hasStartedTracking && this.createdAt >= trackingStartedTime) {
+                        escapedBubblesCount++;
+                    }
+                    updateEscapeRateDisplay();
+                    return false;
+                }
                 return true;
             }
 
@@ -874,7 +1203,6 @@
                 this.x = x; this.y = y; this.shapeType = shapeType; 
                 this.hue = hue; this.life = 1.0; this.size = Math.random() * 6 + 3;
                 const angle = Math.random() * Math.PI * 2; let speed = Math.random() * 6 + 2;
-                
                 switch(shapeType) {
                     case 0: this.vx = (Math.random() - 0.5) * 6; this.vy = (Math.random() - 1) * 10 - 2; this.gravity = 0.5; this.drag = 0.98; this.decay = 0.02; break;
                     case 1: speed = Math.random() * 8 + 4; this.vx = Math.cos(angle) * speed; this.vy = Math.sin(angle) * speed; this.gravity = 0.1; this.drag = 0.95; this.decay = 0.015; break;
@@ -885,7 +1213,6 @@
                 }
                 this.rotation = Math.random() * Math.PI * 2; this.rotationSpeed = (Math.random() - 0.5) * 0.2;
             }
-
             update() {
                 if (this.shapeType === 2) this.x += Math.sin(this.life * 10 + this.swayPhase) * 1.5;
                 if (this.shapeType === 3) { const s = 0.15; const oldVx = this.vx; this.vx = this.vx * Math.cos(s) - this.vy * Math.sin(s); this.vy = oldVx * Math.sin(s) + this.vy * Math.cos(s); }
@@ -893,7 +1220,6 @@
                 this.vx *= this.drag; this.vy *= this.drag; this.vy += this.gravity;
                 this.life -= this.decay; this.size *= 0.96; this.rotation += this.rotationSpeed;
             }
-
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y); ctx.rotate(this.rotation);
@@ -908,17 +1234,26 @@
                 }
                 ctx.restore();
             }
-
             drawTriangle(cx, cy, size) { ctx.beginPath(); ctx.moveTo(0, -size); ctx.lineTo(size, size); ctx.lineTo(-size, size); ctx.closePath(); ctx.fill(); }
             drawHeart(cx, cy, size) { const s = size * 0.8; ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(s/2, -s/2, s*2, s/3, 0, s*1.5); ctx.bezierCurveTo(-s*2, s/3, -s/2, -s/2, 0, 0); ctx.fill(); }
             drawStar(cx, cy, spikes, outerRadius, innerRadius) { let rot = Math.PI / 2 * 3; let x = cx; let y = cy; let step = Math.PI / spikes; ctx.beginPath(); ctx.moveTo(cx, cy - outerRadius); for (let i = 0; i < spikes; i++) { x = cx + Math.cos(rot) * outerRadius; y = cy + Math.sin(rot) * outerRadius; ctx.lineTo(x, y); rot += step; x = cx + Math.cos(rot) * innerRadius; y = cy + Math.sin(rot) * innerRadius; ctx.lineTo(x, y); rot += step; } ctx.lineTo(cx, cy - outerRadius); ctx.closePath(); ctx.fill(); }
         }
 
+        // --- 修复: drawWand 函数补全 ---
         function drawWand() {
             const centerX = width / 2;
-            const bottomY = height + 10; 
+            const bottomY = height + 10;
             let scale = 1; let wobble = 0; const now = Date.now();
-            if (now < blowAnimationEnd) { const progress = (blowAnimationEnd - now) / 500; scale = 1 + Math.sin(progress * Math.PI) * 0.2; wobble = Math.sin(progress * Math.PI * 8) * 0.05; }
+            if (now < blowAnimationEnd) {
+                const progress = (blowAnimationEnd - now) / 500;
+                scale = 1 + Math.sin(progress * Math.PI) * 0.2;
+                wobble = Math.sin(progress * Math.PI * 8) * 0.05;
+            } else if (now < failBlowAnimationEnd) {
+                // 吹泡泡失败的动画：泡泡棒晃动
+                const progress = (failBlowAnimationEnd - now) / 300;
+                wobble = Math.sin(progress * Math.PI * 12) * 0.15 * progress;
+                scale = 1 - progress * 0.1;
+            }
             ctx.save(); ctx.translate(centerX, bottomY); ctx.rotate(wobble); ctx.scale(scale, scale);
             ctx.fillStyle = '#FF8A80'; ctx.beginPath(); ctx.roundRect(-8, -150, 16, 160, 8); ctx.fill();
             ctx.strokeStyle = 'white'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(-4, -140); ctx.lineTo(-4, -20); ctx.stroke();
@@ -929,63 +1264,248 @@
             ctx.restore();
         }
 
+        // 重新开始游戏函数
+        function restartGame() {
+            isGameActive = false;
+            isTimerRunning = false;
+            cancelAnimationFrame(musicTimerID);
+
+            bubbles = [];
+            particles = [];
+            ripples = [];
+            score = 0;
+            scoreDisplay.innerText = 0;
+
+            // 重置计时器状态
+            isTimerRunning = false;
+            timerEndTime = 0;
+
+            // 重置逃逸率统计
+            totalBubblesSpawned = 0;
+            escapedBubblesCount = 0;
+            hasStartedTracking = false;
+            updateEscapeRateDisplay();
+
+            startGame();
+        }
+
         function startGame() {
-            if (isGameActive) return; 
+            if (isGameActive) return;
             startBtn.style.display = 'none';
             instruction.classList.remove('hidden');
             instruction.style.display = 'block';
+            timerDisplay.style.display = 'block';
+            timerDisplay.innerText = `${gameDurationMins.toString().padStart(2, '0')}:00`;
+            escapeRateDisplay.style.display = 'block';
+            restartGameBtn.style.display = 'block';
+
             isGameActive = true;
+            score = 0;
+            scoreDisplay.innerText = 0;
+
+            // 重置计时器状态
+            isTimerRunning = false;
+            timerEndTime = 0;
+
+            // 重置逃逸率统计
+            totalBubblesSpawned = 0;
+            escapedBubblesCount = 0;
+            hasStartedTracking = false; // 重置逃逸率统计标志
+            updateEscapeRateDisplay();
+
             ensureAudioContext();
-            startMusic(); 
-            scanLocalVoices(); 
-            warmUpAudio(); 
-            spawnBubbles(spawnQuantity); 
+            startMusic();
+            scanLocalVoices();
+            warmUpAudio();
+            spawnBubbles(spawnQuantity);
             gameLoop();
         }
 
+        // 结束游戏函数
+        function endGame() {
+            isGameActive = false;
+            isTimerRunning = false;
+            cancelAnimationFrame(musicTimerID); // 停止音乐
+
+            // 显示胜利画面
+            victoryContent.querySelector('p').innerHTML = `${childName} 一共收集了 <span id="finalScore" style="font-size: 3rem; color: #FFD700; margin: 0 10px;">${score}</span> 个泡泡！`;
+            victoryModal.style.display = 'flex';
+
+            // 播放胜利音效和语音
+            playVictorySound();
+            speakPraise(score);
+        }
+
+        // 游戏失败函数
+        function failGame() {
+            isGameActive = false;
+            isTimerRunning = false;
+            cancelAnimationFrame(musicTimerID); // 停止音乐
+
+            // 计算最终逃逸率
+            const finalRate = totalBubblesSpawned > 0 ? Math.round((escapedBubblesCount / totalBubblesSpawned) * 100) : 0;
+
+            // 显示失败画面
+            failContent.querySelector('p').innerHTML = `${childName} 的泡泡逃逸率达到了 <span id="finalEscapeRate" style="font-size: 3rem; color: #FF4444; margin: 0 10px;">${finalRate}%</span>`;
+            failModal.style.display = 'flex';
+
+            // 播放失败音效
+            playFailSound();
+        }
+
+        // 重置并重新开始
+        restartBtn.addEventListener('click', () => {
+            victoryModal.style.display = 'none';
+            restartGame();
+        });
+
+        // 失败后重新开始
+        retryBtn.addEventListener('click', () => {
+            failModal.style.display = 'none';
+            restartGame();
+        });
+
         function spawnBubbles(count) {
+            // 检查泡泡数量是否超过上限
+            const activeBubbles = bubbles.filter(b => !b.popped);
+            if (activeBubbles.length + count > bubbleLimit) {
+                // 吹泡泡失败
+                playFailBlowSound();
+                failBlowAnimationEnd = Date.now() + 300;
+                // 语音提示
+                const templateIndex = Math.floor(Math.random() * tooManyBubblesTemplates.length);
+                const template = tooManyBubblesTemplates[templateIndex];
+                const text = template.replace("{name}", childName);
+
+                const localTooManyUrl = `./sound/toomany_${templateIndex}.mp3`;
+                fetch(localTooManyUrl)
+                    .then(res => { if (!res.ok) throw new Error("Local too-many missing"); return res.blob(); })
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const audio = new Audio(url);
+                        audio.play();
+                    })
+                    .catch(() => { playFallbackPraise(text); });
+                return false;
+            }
+
+            // 正常吹泡泡
             isSpawning = true;
             playBlowSound();
             blowAnimationEnd = Date.now() + 800;
             const startX = width / 2;
-            const startY = height - 140; 
+            const startY = height - 140;
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const activeLetters = new Set(bubbles.filter(b => !b.popped).map(b => b.letter));
                     const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
                     const available = allLetters.filter(l => !activeLetters.has(l));
                     let finalLetter = available.length > 0 ? available[Math.floor(Math.random() * available.length)] : allLetters[Math.floor(Math.random() * allLetters.length)];
-                    bubbles.push(new Bubble(finalLetter, startX, startY));
+                    const newBubble = new Bubble(finalLetter, startX, startY);
+                    bubbles.push(newBubble);
+                    // 只有在开始追踪后吹出的泡泡才计入总数
+                    if (hasStartedTracking && newBubble.createdAt >= trackingStartedTime) {
+                        totalBubblesSpawned++;
+                    }
                     if (i === 0) isSpawning = false;
-                }, i * 60); 
+                }, i * 60);
             }
+            return true;
         }
 
         function popBubble(letter) {
             const candidates = bubbles.filter(b => b.letter === letter && !b.popped);
             if (candidates.length > 0) {
-                const target = candidates[Math.floor(Math.random() * candidates.length)];
-                target.popped = true;
-                score++;
-                scoreDisplay.innerText = score;
-                scoreBoard.style.transform = "scale(1.2)";
-                setTimeout(() => scoreBoard.style.transform = "scale(1)", 150);
-                ripples.push(new Ripple(target.x, target.y, target.colorHue));
-                const charCode = target.letter.charCodeAt(0);
-                const shapeType = (charCode - 65) % 5;
-                for (let i = 0; i < 25; i++) { particles.push(new Particle(target.x, target.y, target.colorHue, shapeType)); }
-                showFloatingText(target.letter, target.x, target.y);
-                playPopSound(target.letter);
+                // --- 计时器逻辑 ---
+                if (!isTimerRunning) {
+                    isTimerRunning = true;
+                    // 设置结束时间 = 当前时间 + 分钟数 * 60000
+                    timerEndTime = Date.now() + gameDurationMins * 60 * 1000;
+                }
+
+                // --- 开始统计逃逸率 ---
+                if (!hasStartedTracking) {
+                    hasStartedTracking = true;
+                    trackingStartedTime = Date.now();
+                    // 不将屏幕上已有的泡泡计入逃逸率统计，从0开始
+                    totalBubblesSpawned = 0;
+                    escapedBubblesCount = 0;
+                }
+
+                // 同时戳破所有相同字母的泡泡
+                candidates.forEach(target => {
+                    target.popped = true;
+                    score++;
+                    scoreDisplay.innerText = score;
+                    scoreBoard.style.transform = "translateX(-50%) scale(1.2)";
+                    setTimeout(() => scoreBoard.style.transform = "translateX(-50%) scale(1)", 150);
+                    ripples.push(new Ripple(target.x, target.y, target.colorHue));
+                    const charCode = target.letter.charCodeAt(0);
+                    const shapeType = (charCode - 65) % 5;
+                    for (let i = 0; i < 25; i++) { particles.push(new Particle(target.x, target.y, target.colorHue, shapeType)); }
+                    showFloatingText(target.letter, target.x, target.y);
+                    playPopSound(target.letter);
+                });
+
+                // 字母读音只播放一次
                 speakLetter(letter);
-                
+
                 if (score >= nextPraiseTarget) {
                     speakPraise(nextPraiseTarget);
-                    if (currentPraiseInterval < maxPraiseInterval) currentPraiseInterval += 5; 
+                    if (currentPraiseInterval < maxPraiseInterval) currentPraiseInterval += 5;
                     nextPraiseTarget += currentPraiseInterval;
                 }
                 return true;
             }
             return false;
+        }
+
+        // 更新逃逸率显示
+        function updateEscapeRateDisplay() {
+            // 只有开始追踪后才显示逃逸率
+            if (!hasStartedTracking) {
+                escapeRateDisplay.innerText = `逃逸率: 0%`;
+                escapeRateDisplay.style.background = 'rgba(255, 255, 255, 0.9)';
+                escapeRateDisplay.style.color = '#FF6B6B';
+                escapeRateDisplay.style.borderColor = 'rgba(255, 107, 107, 0.5)';
+                escapeRateDisplay.classList.remove('danger');
+                return;
+            }
+
+            const rate = totalBubblesSpawned > 0 ? Math.round((escapedBubblesCount / totalBubblesSpawned) * 100) : 0;
+            escapeRateDisplay.innerText = `逃逸率: ${rate}%`;
+
+            // 计算颜色过渡：白色(0%) -> 红色(maxEscapeRate%)
+            const ratio = Math.min(rate / maxEscapeRate, 1);
+            const r = 255;
+            const g = Math.round(255 * (1 - ratio));
+            const b = Math.round(255 * (1 - ratio));
+
+            // 背景色从白色渐变到红色
+            const bgOpacity = 0.9;
+            escapeRateDisplay.style.background = `rgba(${r}, ${g}, ${b}, ${bgOpacity})`;
+
+            // 文字颜色：浅红色 -> 白色
+            if (ratio > 0.5) {
+                escapeRateDisplay.style.color = 'white';
+            } else {
+                escapeRateDisplay.style.color = '#FF6B6B';
+            }
+
+            // 边框颜色
+            escapeRateDisplay.style.borderColor = `rgba(255, ${Math.round(107 * (1 - ratio))}, ${Math.round(107 * (1 - ratio))}, 0.8)`;
+
+            // 如果逃逸率接近上限，添加危险动画
+            if (rate >= maxEscapeRate * 0.8) {
+                escapeRateDisplay.classList.add('danger');
+            } else {
+                escapeRateDisplay.classList.remove('danger');
+            }
+
+            // 检查是否达到失败条件
+            if (totalBubblesSpawned > 0 && rate >= maxEscapeRate) {
+                failGame();
+            }
         }
 
         function showFloatingText(text, x, y) {
@@ -996,6 +1516,23 @@
 
         function gameLoop() {
             if (!isGameActive) return;
+            
+            // --- 更新计时器 ---
+            if (isTimerRunning) {
+                const remaining = timerEndTime - Date.now();
+                if (remaining <= 0) {
+                    timerDisplay.innerText = "00:00";
+                    endGame();
+                    return; // 停止循环
+                } else {
+                    // 格式化时间 MM:SS
+                    const totalSecs = Math.ceil(remaining / 1000);
+                    const mins = Math.floor(totalSecs / 60);
+                    const secs = totalSecs % 60;
+                    timerDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+            }
+
             const activeBubbles = bubbles.filter(b => !b.popped);
             if (activeBubbles.length === 0 && !isSpawning) {
                 isSpawning = true; 
@@ -1014,13 +1551,20 @@
         }
 
         startBtn.addEventListener('click', startGame);
+
+        // 重新开始按钮事件
+        restartGameBtn.addEventListener('click', () => {
+            restartGame();
+        });
+
         window.addEventListener('keydown', (e) => {
-            if (!isGameActive && e.code === 'Space' && !startBtn.disabled) { e.preventDefault(); startGame(); return; }
+            if (!isGameActive && e.code === 'Space' && !startBtn.disabled && victoryModal.style.display !== 'flex') { e.preventDefault(); startGame(); return; }
             if (!isGameActive) return;
             if (e.code === 'Space') { e.preventDefault(); spawnBubbles(spawnQuantity); }
             const key = e.key.toUpperCase();
             if (key.length === 1 && key >= 'A' && key <= 'Z') popBubble(key);
         });
+        startBtn.addEventListener('click', startGame);
         window.addEventListener('touchstart', (e) => {
             if(!isGameActive) return;
             if(e.target === nameInput) return;
